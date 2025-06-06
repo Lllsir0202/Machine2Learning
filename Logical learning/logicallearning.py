@@ -28,14 +28,38 @@ class LogicalLearning:
         a2 = self.sigmoid(x2)
         print("after sigmod x2:", a2.shape)
 
-        loss = np.mean((y - a2.squeeze()) ** 2)
+        loss = np.mean((y - a2) ** 2)
         print(loss)
         return x1, a1, x2, a2, loss
 
-    def train(self, epochs = 5, batch_size = 4, learning_rate = 0.01):
+    def train(self, x, y, epochs = 5, batch_size = 4, learning_rate = 0.01):
         # This function is used to train the model
-        # for epoch in range(epochs):
+        for epoch in range(epochs):
+            print(f"Training Epoch {epoch+1} / {epochs}")
+            # output training epoch
 
+            # First backward -> start from output layer
+            # calculate the gradient of loss with respect to output layer
+            x1,a1,x2,a2,loss = self.forward(x, y)
+            # Now we review Senior Math
+            # loss = 1/n * (y - a2) ^ 2
+            # dL/da2 = - 2/n (y - a2) = 2/n (a2 - y)
+            # a2 = sigmoid(x2)
+            # da2/dx2 = a2 * (1 - a2)
+            # dL/dx2 = dL/da2 * da2/dx2 = 2/n (a2 - y) * a2 * (1 - a2)
+
+            # What we need is dL/dw2 and dL/db2
+            # L = 1/n * (y - a2) ^ 2 = 1/n * (y - sigmoid(x2)) ^ 2 = 1/n * (y - sigmod(a1 @ w2 + b2)) ^ 2
+            # so dL/dw2 = dL/dx2 * dx2/dw2
+            # x2 = a1 @ w2 + b2 -> dx2/dw2 = a1
+            # dL/dw2 = dL/dx2 * dx2/dw2 = dL/dx2 * a1 = 2/n (a2 - y) * a2 * (1 - a2) * a1
+            # dL/db2 = dL/dx2 * dx2/db2 = dL/dx2 * 1 = 2/n (a2 - y) * a2 * (1 - a2)
+            dz2 = 2 / len(y) * (a2 - y) * a2 * (1 - a2)
+            print(dz2.shape)
+            dw2 = a1.T @ dz2
+            print(dw2.shape)
+            db2 = np.sum(dz2, axis=0)
+            print(db2.shape)
         return
 
 if __name__ == "__main__":
@@ -43,9 +67,11 @@ if __name__ == "__main__":
     y = [0, 0, 0, 1]
 
     np_x = np.array(x)
-    np_y = np.array(y)
+    np_y = np.array(y).reshape(-1,1)
     print("Input:", np_x)
+    print("Inpit shape:", np_x.shape)
     print("Output:", np_y)
+    print("Output shape:", np_y.shape)
     ll = LogicalLearning()
 
-    ll.forward(np_x, np_y)
+    ll.train(np_x, np_y)
