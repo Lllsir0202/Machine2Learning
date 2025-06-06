@@ -16,22 +16,27 @@ class LogicalLearning:
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
 
-    def logicallearning(self, x, y):
+    def forward(self, x, y):
         # Forward pass -> 
         x1 = x @ self.w1 + self.b1
         print("before sigmod x1:", x1.shape)
-        x1 = self.sigmoid(x1)
-        print("after sigmod x1:", x1.shape)
+        a1 = self.sigmoid(x1)
+        print("after sigmod x1:", a1.shape)
 
-        x2 = x1 @ self.w2 + self.b2
+        x2 = a1 @ self.w2 + self.b2
         print("before sigmod x2:", x2.shape)
-        x2 = self.sigmoid(x2)
-        print("after sigmod x2:", x2.shape)
+        a2 = self.sigmoid(x2)
+        print("after sigmod x2:", a2.shape)
 
-        loss = np.mean((y - x2.squeeze()) ** 2)
+        loss = np.mean((y - a2.squeeze()) ** 2)
         print(loss)
+        return x1, a1, x2, a2, loss
 
-        
+    def train(self, epochs = 5, batch_size = 4, learning_rate = 0.01):
+        # This function is used to train the model
+        # for epoch in range(epochs):
+
+        return
 
 if __name__ == "__main__":
     x = [[0,0], [0,1], [1,0], [1,1]]
@@ -43,4 +48,4 @@ if __name__ == "__main__":
     print("Output:", np_y)
     ll = LogicalLearning()
 
-    ll.logicallearning(np_x, np_y)
+    ll.forward(np_x, np_y)
