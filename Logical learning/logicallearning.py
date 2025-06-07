@@ -75,6 +75,16 @@ class LogicalLearning:
             # db1 = dL/db1 = dL/dx1 * dx1/db1 = dz1 * 1 = dz1
             db1 = np.sum(dz1, axis=0)
             print(db1.shape)
+
+            # Next We need to update the weights and biases
+            self.w2 = self.w2 - learning_rate * dw2
+            self.b2 = self.b2 - learning_rate * db2
+            self.w1 = self.w1 - learning_rate * dw1
+            self.b1 = self.b1 - learning_rate * db1
+            print("Weights and biases updated")
+        return
+
+    def predict(self, x):
         return
 
 if __name__ == "__main__":
