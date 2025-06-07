@@ -1,7 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt
+from LogicalLearning import LogicalLearning
 
-class LogicalLearning:
+class ANDGATE(LogicalLearning):
     def __init__(self):
         # w1 -> weights for first layer
         self.w1 = np.random.randn(2,2)
@@ -13,9 +13,6 @@ class LogicalLearning:
         self.b2 = np.zeros((1,))
 
         # The total procedure is : input-> x' = f(w1 @ input + b1) -> y = f(w2 @ x' + b2)
-
-    def sigmoid(self, x):
-        return 1 / (1 + np.exp(-x))
 
     def forward(self, x, y):
         # Forward pass -> 
@@ -56,7 +53,7 @@ class LogicalLearning:
             # x2 = a1 @ w2 + b2 -> dx2/dw2 = a1
             # dL/dw2 = dL/dx2 * dx2/dw2 = dL/dx2 * a1 = 2/n (a2 - y) * a2 * (1 - a2) * a1
             # dL/db2 = dL/dx2 * dx2/db2 = dL/dx2 * 1 = 2/n (a2 - y) * a2 * (1 - a2)
-            dz2 = 2 / len(y) * (a2 - y) * a2 * (1 - a2)
+            dz2 = 2 / len(y) * (a2 - y) * self.sigmoid_derivative(a2)
             # print(dz2.shape)
             dw2 = a1.T @ dz2
             # print(dw2.shape)
@@ -67,7 +64,7 @@ class LogicalLearning:
             # dL/dx1 = dL/dx2 * dx2/dx1 -> x2 = a1 @ w2 + b2 = sigmod(x1) @ w2 + b2
             # dx2/dx1 = dx2/da1 * da1/dx1 = w2.T * a1 * (1 - a1)
             # dz1 = dz2 @ self.w2.T * a1 * (1 - a1)
-            dz1 = dz2 @ self.w2.T * a1 * (1 - a1)
+            dz1 = dz2 @ self.w2.T * self.sigmoid_derivative(a1)
             # print(dz1.shape)
             # dw1 = dL/dw1 = dL/dx1 * dx1/dw1 = dz1 * dx1/dw1
             # x1 = w1 @ x + b1 -> dx1/dw1 = x.T
@@ -87,11 +84,7 @@ class LogicalLearning:
             losses.append(loss)
 
         x_axis = np.arange(1, epochs + 1)
-        plt.plot(x_axis, losses)
-        plt.xlabel('Epochs')
-        plt.ylabel('Loss')
-        plt.title('Loss over epochs')
-        plt.show()
+        self.plot_draw(x_axis, losses)
         return
 
     def predict(self, x):
@@ -110,7 +103,7 @@ if __name__ == "__main__":
     print("Inpit shape:", np_x.shape)
     print("Output:", np_y)
     print("Output shape:", np_y.shape)
-    ll = LogicalLearning()
+    ll = ANDGATE()
 
     ll.train(np_x, np_y)
 
