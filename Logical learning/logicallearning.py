@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 class LogicalLearning:
     def __init__(self):
@@ -19,21 +20,22 @@ class LogicalLearning:
     def forward(self, x, y):
         # Forward pass -> 
         x1 = x @ self.w1 + self.b1
-        print("before sigmod x1:", x1.shape)
+        # print("before sigmod x1:", x1.shape)
         a1 = self.sigmoid(x1)
-        print("after sigmod x1:", a1.shape)
+        # print("after sigmod x1:", a1.shape)
 
         x2 = a1 @ self.w2 + self.b2
-        print("before sigmod x2:", x2.shape)
+        # print("before sigmod x2:", x2.shape)
         a2 = self.sigmoid(x2)
-        print("after sigmod x2:", a2.shape)
+        # print("after sigmod x2:", a2.shape)
 
         loss = np.mean((y - a2) ** 2)
-        print(loss)
+        # print(loss)
         return x1, a1, x2, a2, loss
 
-    def train(self, x, y, epochs = 5, batch_size = 4, learning_rate = 0.01):
+    def train(self, x, y, epochs = 10000, batch_size = 4, learning_rate = 0.1):
         # This function is used to train the model
+        losses = []
         for epoch in range(epochs):
             print(f"Training Epoch {epoch+1} / {epochs}")
             # output training epoch
@@ -55,37 +57,48 @@ class LogicalLearning:
             # dL/dw2 = dL/dx2 * dx2/dw2 = dL/dx2 * a1 = 2/n (a2 - y) * a2 * (1 - a2) * a1
             # dL/db2 = dL/dx2 * dx2/db2 = dL/dx2 * 1 = 2/n (a2 - y) * a2 * (1 - a2)
             dz2 = 2 / len(y) * (a2 - y) * a2 * (1 - a2)
-            print(dz2.shape)
+            # print(dz2.shape)
             dw2 = a1.T @ dz2
-            print(dw2.shape)
+            # print(dw2.shape)
             db2 = np.sum(dz2, axis=0)
-            print(db2.shape)
+            # print(db2.shape)
 
             # Now we need to calculate the gradient of loss with respect to first layer
             # dL/dx1 = dL/dx2 * dx2/dx1 -> x2 = a1 @ w2 + b2 = sigmod(x1) @ w2 + b2
             # dx2/dx1 = dx2/da1 * da1/dx1 = w2.T * a1 * (1 - a1)
             # dz1 = dz2 @ self.w2.T * a1 * (1 - a1)
             dz1 = dz2 @ self.w2.T * a1 * (1 - a1)
-            print(dz1.shape)
+            # print(dz1.shape)
             # dw1 = dL/dw1 = dL/dx1 * dx1/dw1 = dz1 * dx1/dw1
             # x1 = w1 @ x + b1 -> dx1/dw1 = x.T
             # dw1 = x.T @ dz1
             dw1 = x.T @ dz1
-            print(dw1.shape)
+            # print(dw1.shape)
             # db1 = dL/db1 = dL/dx1 * dx1/db1 = dz1 * 1 = dz1
             db1 = np.sum(dz1, axis=0)
-            print(db1.shape)
+            # print(db1.shape)
 
             # Next We need to update the weights and biases
             self.w2 = self.w2 - learning_rate * dw2
             self.b2 = self.b2 - learning_rate * db2
             self.w1 = self.w1 - learning_rate * dw1
             self.b1 = self.b1 - learning_rate * db1
-            print("Weights and biases updated")
+            # print("Weights and biases updated")
+            losses.append(loss)
+
+        x_axis = np.arange(1, epochs + 1)
+        plt.plot(x_axis, losses)
+        plt.xlabel('Epochs')
+        plt.ylabel('Loss')
+        plt.title('Loss over epochs')
+        plt.show()
         return
 
     def predict(self, x):
-        return
+        # First layer
+        a1 = self.sigmoid(x @ self.w1 + self.b1)
+        a2 = self.sigmoid(a1 @ self.w2 + self.b2)
+        return (a2 > 0.5).astype(int)
 
 if __name__ == "__main__":
     x = [[0,0], [0,1], [1,0], [1,1]]
@@ -100,3 +113,6 @@ if __name__ == "__main__":
     ll = LogicalLearning()
 
     ll.train(np_x, np_y)
+
+    # ll.predict(np_x)
+    print("Predictions:", ll.predict(np_x))
