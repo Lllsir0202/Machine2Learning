@@ -70,7 +70,7 @@ class XORGATE_TANH(LogicalLearning):
 
 if __name__ == "__main__":
     x = [[0,0], [0,1], [1,0], [1,1]]
-    y = [1, 0, 0, 1]
+    y = [0, 1, 1, 0]
 
     np_x = np.array(x)
     np_y = 2 * np.array(y).reshape(-1, 1)-1
