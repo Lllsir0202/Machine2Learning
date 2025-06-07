@@ -60,6 +60,21 @@ class LogicalLearning:
             print(dw2.shape)
             db2 = np.sum(dz2, axis=0)
             print(db2.shape)
+
+            # Now we need to calculate the gradient of loss with respect to first layer
+            # dL/dx1 = dL/dx2 * dx2/dx1 -> x2 = a1 @ w2 + b2 = sigmod(x1) @ w2 + b2
+            # dx2/dx1 = dx2/da1 * da1/dx1 = w2.T * a1 * (1 - a1)
+            # dz1 = dz2 @ self.w2.T * a1 * (1 - a1)
+            dz1 = dz2 @ self.w2.T * a1 * (1 - a1)
+            print(dz1.shape)
+            # dw1 = dL/dw1 = dL/dx1 * dx1/dw1 = dz1 * dx1/dw1
+            # x1 = w1 @ x + b1 -> dx1/dw1 = x.T
+            # dw1 = x.T @ dz1
+            dw1 = x.T @ dz1
+            print(dw1.shape)
+            # db1 = dL/db1 = dL/dx1 * dx1/db1 = dz1 * 1 = dz1
+            db1 = np.sum(dz1, axis=0)
+            print(db1.shape)
         return
 
 if __name__ == "__main__":
