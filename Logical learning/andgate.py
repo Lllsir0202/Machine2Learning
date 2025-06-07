@@ -108,4 +108,4 @@ if __name__ == "__main__":
     ll.train(np_x, np_y)
 
     # ll.predict(np_x)
-    print("Predictions:", ll.predict(np_x))
+    print("Predictions:\n", ll.predict(np_x))
