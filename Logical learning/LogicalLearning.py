@@ -8,6 +8,12 @@ class LogicalLearning:
     def sigmoid_derivative(self, x):
         return x * (1 - x)
     
+    def tanh(self, x):
+        return np.tanh(x)
+    
+    def tanh_derivative(self, x):
+        return 1 - x ** 2
+    
     def plot_draw(self, x_axis, losses):
         plt.plot(x_axis, losses)
         plt.xlabel('Epochs')

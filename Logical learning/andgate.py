@@ -103,9 +103,8 @@ if __name__ == "__main__":
     print("Inpit shape:", np_x.shape)
     print("Output:", np_y)
     print("Output shape:", np_y.shape)
-    ll = ANDGATE()
+    andgate = ANDGATE()
 
-    ll.train(np_x, np_y)
+    andgate.train(np_x, np_y)
 
-    # ll.predict(np_x)
-    print("Predictions:\n", ll.predict(np_x))
+    print("Predictions:\n", andgate.predict(np_x))
