@@ -13,7 +13,8 @@ This project will be origanised as following:
     ├── src/                # Core implementation code
     │   ├── model.py        # MLP model implementation
     │   ├── utils.py        # Helper functions (activation functions, loss, etc.)
-    │   └── train.py        # Main training script
+    │   ├── train.py        # Main training script
+    │   └── dataloader.py   # Load dataset
     │
     ├── test/               # Scripts for testing or visualization
     │
