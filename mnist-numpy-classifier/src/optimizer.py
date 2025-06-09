@@ -1,4 +1,4 @@
-import numpy as np
+# Optimizer class for managing model parameters and learning rate
 
 class Optimizer:
     def __init__(self, parameters, learning_rate):

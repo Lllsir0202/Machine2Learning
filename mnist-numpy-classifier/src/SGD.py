@@ -1,4 +1,4 @@
-import numpy as np
+# Optimizer method for stochastic gradient descent (SGD)
 from optimizer import Optimizer
 
 class SGD(Optimizer):
