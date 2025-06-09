@@ -7,7 +7,7 @@ class Model:
     def __init__(self, input_size, output_size, activation='relu'):
         # First layer weights and biases
         # Use He initialization for ReLU activation
-        self.activation = activation
+        self.activation = Activations(activation)
         self.w1 = np.random.randn(input_size, 128) * np.sqrt(2. / input_size)
         self.b1 = np.zeros((128,))
         # Second layer weights and biases
@@ -18,8 +18,7 @@ class Model:
     def forward(self, x):
         z1 = x @ self.w1 + self.b1
 
-        activation1 = Activations(self.activation)
-        a1 = activation1.activate(z1)
+        a1 = self.activation.activate(z1)
 
         z2 = a1 @ self.w2 + self.b2
         prob = softmax(z2)
@@ -44,8 +43,7 @@ class Model:
         db2 = np.sum(delta2, axis=0) # Shape: (output_size,)
         # Compute gradients for the first layer
 
-        activation = Activations('relu')
-        delta1 = (delta2 @ self.w2.T) * activation.derivative(self.z1)
+        delta1 = (delta2 @ self.w2.T) * self.activation.derivative(self.z1)
         dw1 = x.T @ delta1
         db1 = np.sum(delta1, axis=0)
 

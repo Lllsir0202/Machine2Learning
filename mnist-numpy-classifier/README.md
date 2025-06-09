@@ -17,6 +17,7 @@ This project will be origanised as following:
     │   ├── activations.py  # Activation functions
     │   ├── metrics.py      # Visualization functions
     │   ├── losses.py       # Losses functions
+    │   ├── optimizer.py    # Optimizer functions
     │   └── dataloader.py   # Load dataset
     │
     │
