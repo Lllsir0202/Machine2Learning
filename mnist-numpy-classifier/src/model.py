@@ -54,3 +54,19 @@ class Model:
         self.db2 = db2
 
         return
+    
+    def paramters(self):
+        return {
+            'w1': self.w1,
+            'b1': self.b1,
+            'w2': self.w2,
+            'b2': self.b2
+        }
+    
+    def gradients(self):
+        return {
+            'w1': self.dw1,
+            'b1': self.db1,
+            'w2': self.dw2,
+            'b2': self.db2
+        }
