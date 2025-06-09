@@ -12,12 +12,15 @@ This project will be origanised as following:
     │
     ├── src/                # Core implementation code
     │   ├── model.py        # MLP model implementation
-    │   ├── utils.py        # Helper functions (activation functions, loss, etc.)
+    │   ├── utils.py        # Common helpers
     │   ├── train.py        # Main training script
+    │   ├── activations.py  # Activation functions
+    │   ├── metrics.py      # Visualization functions
+    │   ├── losses.py       # Losses functions
     │   └── dataloader.py   # Load dataset
     │
-    ├── test/               # Scripts for testing or visualization
     │
+    ├── main.py             # Start train and evaluate results
     ├── README.md           # Project documentation
     │
-    └── requirements.txt    # Required Python packages (e.g., numpy, matplotlib)
+    └── requirements.txt    # Required Python packages
