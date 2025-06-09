@@ -88,7 +88,22 @@ def load_mnist_labels(path):
 
         return labels
 
-
+# Returns format: (train_images, train_labels, test_images, test_labels)
 def load_dataset():
     """Combined function to return (train_images, train_labels, test_images, test_labels)"""
-    pass
+    download_mnist('data')
+
+    data_path = os.path.join(project_root, 'data')
+
+    # Load the MNIST train dataset
+    train_images = load_mnist_images(os.path.join(data_path, "train-images-idx3-ubyte.gz"))
+    train_labels = load_mnist_labels(os.path.join(data_path, "train-labels-idx1-ubyte.gz"))
+
+    # Load the MNIST test dataset
+    test_images = load_mnist_images(os.path.join(data_path, "t10k-images-idx3-ubyte.gz"))
+    test_labels = load_mnist_labels(os.path.join(data_path, "t10k-labels-idx1-ubyte.gz"))
+
+    if DEBUG:
+        print(f"Train Images Shape: {train_images.shape}, Train Labels Shape: {train_labels.shape}")
+        print(f"Test Images Shape: {test_images.shape}, Test Labels Shape: {test_labels.shape}")
+    return train_images, train_labels, test_images, test_labels
