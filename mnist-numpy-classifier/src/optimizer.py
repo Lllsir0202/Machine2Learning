@@ -1,6 +1,5 @@
 # Optimizer class for managing model parameters and learning rate
 
 class Optimizer:
-    def __init__(self, parameters, learning_rate):
-        self.parameters = parameters
+    def __init__(self, learning_rate):
         self.learning_rate = learning_rate

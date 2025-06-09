@@ -12,25 +12,25 @@ def get_batches(data, labels, batch_size):
 
 def train(epochs=10, batch_size=32, learning_rate=0.01):
     # Load MNIST dataset
-    train_images, train_labels, _, _ = load_dataset(flatten=True, one_hot=True)
+    train_images, train_labels, test_images, test_labels = load_dataset(flatten=True, one_hot=True)
 
     # Initialize model
     model = Model(input_size=784, output_size=10, activation='relu')
     # Initialize optimizer
-    optimizer = SGD(model, learning_rate=learning_rate)
+    optimizer = SGD(learning_rate=learning_rate)
     # Training loop
     for epoch in range(epochs):
         total_loss = 0.0
         for x_batch, y_batch in get_batches(train_images, train_labels, batch_size):
             prob = model.forward(x_batch)
-            loss = cross_entropy(prob, y_batch)
+            loss = cross_entropy(prob, y_batch,mean=True)
             total_loss += loss
 
             model.backward(x_batch, y_batch, learning_rate)
-            optimizer.step(model.gradients())
+            optimizer.step(model.parameters(), model.gradients())
         avg_loss = total_loss / (len(train_images) // batch_size)
         print(f'Epoch {epoch + 1}/{epochs}, Loss: {avg_loss:.4f}')
-    evaluate(model, train_images, train_labels)
+    evaluate(model, test_images, test_labels)
 
 def evaluate(model, test_images, test_labels):
     predict_prob = model.forward(test_images)

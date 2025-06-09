@@ -2,7 +2,7 @@
 from optimizer import Optimizer
 
 class SGD(Optimizer):
-    def step(self, gradients):
-        for key in self.parameters.keys():
-            self.parameters[key] -= self.learning_rate * gradients[key]
-        return self.parameters
+    def step(self, parameters, gradients):
+        for key in parameters.keys():
+            parameters[key] -= self.learning_rate * gradients[key]
+        return parameters

@@ -55,7 +55,7 @@ class Model:
 
         return
     
-    def paramters(self):
+    def parameters(self):
         return {
             'w1': self.w1,
             'b1': self.b1,
