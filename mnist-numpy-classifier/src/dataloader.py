@@ -89,7 +89,7 @@ def load_mnist_labels(path):
         return labels
 
 # Returns format: (train_images, train_labels, test_images, test_labels)
-def load_dataset():
+def load_dataset(flatten = False, one_hot = False):
     """Combined function to return (train_images, train_labels, test_images, test_labels)"""
     download_mnist('data')
 
@@ -102,6 +102,20 @@ def load_dataset():
     # Load the MNIST test dataset
     test_images = load_mnist_images(os.path.join(data_path, "t10k-images-idx3-ubyte.gz"))
     test_labels = load_mnist_labels(os.path.join(data_path, "t10k-labels-idx1-ubyte.gz"))
+
+    if flatten:
+        # Initial is (num_images, num_rows, num_cols)
+        # Reshape images to (num_images, num_pixels)
+        train_images = train_images.reshape(train_images.shape[0], -1)
+        test_images = test_images.reshape(test_images.shape[0], -1)
+
+    if one_hot:
+        # Convert labels to one-hot encoding
+        # Used to train neural networks
+        # It will create an array of shape (num_labels, 10)
+        num_classes = 10
+        train_labels = np.eye(num_classes)[train_labels]
+        test_labels = np.eye(num_classes)[test_labels]
 
     if DEBUG:
         print(f"Train Images Shape: {train_images.shape}, Train Labels Shape: {train_labels.shape}")
