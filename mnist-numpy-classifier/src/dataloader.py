@@ -3,10 +3,15 @@
 
 import os
 import urllib.request
+import gzip
 
 def download_mnist(dir='data'): 
     """Download the MNIST dataset (if not already downloaded)"""
     
+    # To avoid unnecessary questions, we use absolute paths
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(current_dir)
+    dir = os.path.join(project_root, dir)
     # Create the directory if it does not exist
     if not os.path.exists(dir):
         os.makedirs(dir)
