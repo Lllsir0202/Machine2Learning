@@ -30,6 +30,6 @@ class Activators:
         elif self.activation_type.lower() == 'leaky_relu':
             return Leaky_Relu.backward(x)
         elif self.activation_type.lower() == 'softmax':
-            return ValueError("Softmax does not have a standard backward function.")
+            raise ValueError("Softmax does not have a standard backward function.")
         else:
             raise ValueError(f"Unknown activation function: {self.activation_type}")
