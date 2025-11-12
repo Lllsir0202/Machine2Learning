@@ -1,5 +1,12 @@
 import numpy as np
 
+"""
+Sigmoid Activation Function Module
+formula:
+    forward: sigmoid(x) = 1 / (1 + exp(-x))
+    backward: sigmoid(x) * (1 - sigmoid(x))
+"""
+
 class Sigmoid:
     @staticmethod
     def forward(x):

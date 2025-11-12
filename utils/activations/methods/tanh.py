@@ -1,5 +1,13 @@
 import numpy as np
 
+"""
+Tanh Activation Function Module
+
+formula:
+    forward: tanh(x) = (exp(x) - exp(-x)) / (exp(x) + exp(-x))
+    backward: (1 - tanh²(x))
+"""
+
 class Tanh:
     @staticmethod
     def forward(x):

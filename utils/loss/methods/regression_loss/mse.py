@@ -1,5 +1,15 @@
 import numpy as np
 
+"""
+MSE: Mean Squared Error loss
+    forward: Compute the MSE loss
+    backward: Compute the gradient of the MSE loss
+
+formula:
+    loss = (1/n) * Σ(y_true - y_pred)²
+    gradient = (2/n) * (y_pred - y_true)
+"""
+
 class MSE:
     @staticmethod
     def forward(y_true, y_pred):

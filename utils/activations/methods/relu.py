@@ -1,5 +1,11 @@
 import numpy as np
 
+"""
+ReLU Activation Function Module
+formula:
+    forward: relu(x) = max(0, x)
+    backward: 1 if x > 0 else 0
+"""
 class Relu:
     @staticmethod
     def forward(x):
