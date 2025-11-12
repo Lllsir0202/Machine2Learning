@@ -1,3 +1,5 @@
+TODO(): Finish classification loss and introductions to all methods, as well as finish UnitTests
+
 # Basic Tools(utils/*)
 ## Activations
 Utilize all activation functions, and we leave interfaces to assist anyone interested to add new activation functions.
@@ -21,4 +23,9 @@ As for loss, we use a similar design mode, but there is a little bit difference 
 3. Huber
 
 ### Classification Loss
-TODO(): Finish classification loss and introductions to all methods, as well as finish UnitTests
+
+# Unittests
+## Activations tests
+test all activation functions, in order to guarantee all activation functions are right at least in unittest cases.
+
+## Loss tests
