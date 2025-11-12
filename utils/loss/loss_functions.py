@@ -1,0 +1,2 @@
+from loss.methods.classification_loss import classification
+from loss.methods.regression_loss import regression
