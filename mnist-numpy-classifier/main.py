@@ -6,7 +6,7 @@ parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'src'))
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
-from train import train
+from src.train import train
 
 
 
