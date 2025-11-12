@@ -1,5 +1,3 @@
-Used for learning Machine Learning
-
 # Logical Learning
 ## AND Gate with Neural Network
 
